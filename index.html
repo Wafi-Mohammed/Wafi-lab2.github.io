@@ -12,12 +12,12 @@
       var lastStingTime;
     </script>
 
-    <!-- <noscript>
+    <noscript>
       Warning - Javascript is Disabled For full functionality of this page, it
       is necessary to enable Javascript.
-    </noscript> -->
+    </noscript>
   </head>
-  <body onload="start();">
+  <body onload="start()">
     <div id="title">
       <h1>Help the bear escape the bees !</h1>
       <p>
@@ -26,12 +26,24 @@
         jumping. The objective is to have as less stings as possible!
       </p>
       <p>
-        You can adjust the speed of the bees
+        You can adjust the speed of the bear
+        <input
+          type="text"
+          id="speedBear"
+          onchange="setSpeed()"
+          value="100"
+          size="3"
+        />
+        px/ms <br />
+        and adjust the speed of the bees
         <input type="text" id="speedBees" value="50" size="3" /> px/ms <br />
         and the refresh period
         <input type="text" id="periodTimer" value="10" size="3" /> ms <br />
       </p>
       <h2>Press left, right, up, down keys to move the bear</h2>
+      <p>
+        <button id="add" onclick="addBees()">Add Bees</button>
+      </p>
     </div>
     <div id="score">
       <table>

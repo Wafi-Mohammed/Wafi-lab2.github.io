@@ -6,6 +6,7 @@ function Bear() {
   this.y = this.htmlElement.offsetTop;
 
   this.move = function (xDir, yDir) {
+    this.dBear = setSpeed();
     this.fitBounds();
     this.x += this.dBear * xDir;
     this.y += this.dBear * yDir;
@@ -33,10 +34,13 @@ function Bear() {
   };
 }
 
+function setSpeed() {
+  return document.getElementById("speedBear").value;
+}
+
 function start() {
   bear = new Bear();
-
-  document.addEventListener("keydown", moveBear, false);
+  dBear = document.addEventListener("keydown", moveBear, false);
 
   bees = new Array();
   makeBees();
@@ -155,7 +159,6 @@ function makeBees() {
 
 function moveBees() {
   let speed = document.getElementById("speedBees").value;
-  speed = Number(speed);
   for (let i = 0; i < bees.length; i++) {
     let dx = getRandomInt(2 * speed) - speed;
     let dy = getRandomInt(2 * speed) - speed;
@@ -167,7 +170,12 @@ function moveBees() {
 function updateBees() {
   moveBees();
   let period = document.getElementById("periodTimer").value;
-  updateTimer = setTimeout("updateBees()", period);
+  if (hits.innerHTML == 1000) {
+    alert("Game Over!");
+    updateTimer = clearTimeout();
+  } else {
+    updateTimer = setTimeout("updateBees()", period);
+  }
 }
 
 function isHit(defender, offender) {
@@ -179,7 +187,7 @@ function isHit(defender, offender) {
     let newStingTime = new Date();
     let thisDuration = newStingTime - lastStingTime;
     lastStingTime = newStingTime;
-    let longestDuration = Number(duration.innerHTML);
+    let longestDuration = Number(thisDuration) / 60;
     if (longestDuration === 0) {
       longestDuration = thisDuration;
     } else {
@@ -208,4 +216,20 @@ function overlap(element1, element2) {
     return false;
   }
   return true;
+}
+
+function addBees() {
+  let nbBees = document.getElementById("nbBees").value;
+  nbBees = Number(nbBees);
+
+  let i = 1;
+  while (i <= nbBees) {
+    var num = i;
+    var bee = new Bee(num);
+    bee.display();
+    bees.push(bee);
+    i++;
+  }
+  nbBees += 1;
+  document.getElementById("nbBees").value = nbBees;
 }
